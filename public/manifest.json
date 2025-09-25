@@ -1,0 +1,14 @@
+{
+  "name": "Splitsync Agent",
+  "description": "Splitsync Agent is a Base Mini App built with Zara.",
+  "image": "https://dummyimage.com/1200x628/0a0b0d/ffffff.png&text=OG",
+  "external_url": "https://11fed07a-8199-4dae-98cc-95365e280e15.vercel.app",
+  "properties": {
+    "app": {
+      "name": "Splitsync Agent",
+      "description": "Splitsync Agent is a Base Mini App built with Zara.",
+      "url": "https://11fed07a-8199-4dae-98cc-95365e280e15.vercel.app",
+      "icon": "https://0co.to/images/zara-2.png"
+    }
+  }
+}
