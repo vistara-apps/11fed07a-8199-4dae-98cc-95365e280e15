@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Finance Theme - Professional Dark Navy + Gold */
+  --color-bg: #0a1628;
+  --color-fg: #f8fafc;
+  --color-accent: #ffd700;
+  --color-primary: #1e40af;
+  --color-surface: #1e293b;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-border: #334155;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+}
+
+[data-theme="celo"] {
+  --color-bg: #000000;
+  --color-fg: #ffffff;
+  --color-accent: #fbcc5c;
+  --color-primary: #35d07f;
+  --color-surface: #1a1a1a;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a3a3a3;
+  --color-border: #333333;
+  --color-success: #35d07f;
+  --color-warning: #fbcc5c;
+  --color-error: #ff6b6b;
+}
+
+[data-theme="solana"] {
+  --color-bg: #1a0d2e;
+  --color-fg: #ffffff;
+  --color-accent: #9945ff;
+  --color-primary: #14f195;
+  --color-surface: #2d1b4e;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b794f6;
+  --color-border: #553c9a;
+  --color-success: #14f195;
+  --color-warning: #ffd700;
+  --color-error: #ff6b6b;
+}
+
+[data-theme="base"] {
+  --color-bg: #0052ff;
+  --color-fg: #ffffff;
+  --color-accent: #0052ff;
+  --color-primary: #0052ff;
+  --color-surface: #1a4fff;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b3d1ff;
+  --color-border: #4d7fff;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+}
+
+[data-theme="coinbase"] {
+  --color-bg: #0d1421;
+  --color-fg: #ffffff;
+  --color-accent: #0052ff;
+  --color-primary: #0052ff;
+  --color-surface: #1a2332;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #8a9ba8;
+  --color-border: #2d3748;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-textPrimary;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-surface/80 backdrop-blur-sm border border-border/50;
+  }
+
+  .finance-gradient {
+    background: linear-gradient(135deg, var(--color-surface) 0%, rgba(255, 215, 0, 0.1) 100%);
+  }
+
+  .gold-glow {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-accent to-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:from-yellow-400 hover:to-accent transition-all duration-200 shadow-lg hover:shadow-xl;
+  }
+
+  .btn-secondary {
+    @apply bg-surface border border-border text-textPrimary px-6 py-3 rounded-lg font-medium hover:bg-surface/80 transition-all duration-200;
+  }
+
+  .metric-card {
+    @apply glass-card p-6 hover:bg-surface/90 transition-all duration-200 finance-gradient;
+  }
+
+  .transaction-row {
+    @apply border-b border-border/30 hover:bg-surface/30 transition-all duration-200;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+.animate-pulse-gold {
+  animation: pulseGold 2s infinite;
+}
