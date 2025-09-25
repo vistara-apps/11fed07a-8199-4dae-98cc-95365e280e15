@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { ExternalLink, Eye, CheckCircle, Clock, XCircle } from 'lucide-react';
 import { ProofStatusBadge } from './ProofStatusBadge';
+import { TransactionStatus } from './TransactionStatus';
 
 interface Transaction {
   id: string;
@@ -52,6 +53,7 @@ const mockTransactions: Transaction[] = [
 
 export function TransactionTable({ variant = 'default' }: TransactionTableProps) {
   const [selectedTransaction, setSelectedTransaction] = useState<string | null>(null);
+  const [showTransactionDetails, setShowTransactionDetails] = useState<string | null>(null);
 
   const getStatusIcon = (status: Transaction['status']) => {
     switch (status) {
@@ -108,59 +110,74 @@ export function TransactionTable({ variant = 'default' }: TransactionTableProps)
           </thead>
           <tbody className="divide-y divide-border/30">
             {mockTransactions.map((transaction) => (
-              <tr key={transaction.id} className="transaction-row">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    transaction.type === 'STREAMING' 
-                      ? 'bg-primary/20 text-primary' 
-                      : 'bg-accent/20 text-accent'
-                  }`}>
-                    {transaction.type}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-textPrimary font-medium">
-                  ${transaction.amount.toLocaleString()} USDC
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-textSecondary">
-                  {transaction.recipients} recipients
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center space-x-2">
-                    {getStatusIcon(transaction.status)}
-                    <span className="text-sm text-textSecondary capitalize">
-                      {transaction.status.toLowerCase()}
+              <Fragment key={transaction.id}>
+                <tr className="transaction-row">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      transaction.type === 'STREAMING' 
+                        ? 'bg-primary/20 text-primary' 
+                        : 'bg-accent/20 text-accent'
+                    }`}>
+                      {transaction.type}
                     </span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <ProofStatusBadge variant={transaction.proofStatus} />
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-textSecondary">
-                  {formatDate(transaction.timestamp)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => setSelectedTransaction(transaction.id)}
-                      className="text-accent hover:text-accent/80"
-                      title="View Details"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </button>
-                    {transaction.txHash && (
-                      <a
-                        href={`https://basescan.org/tx/${transaction.txHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-textSecondary hover:text-textPrimary"
-                        title="View on Basescan"
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-textPrimary font-medium">
+                    ${transaction.amount.toLocaleString()} USDC
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-textSecondary">
+                    {transaction.recipients} recipients
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center space-x-2">
+                      {getStatusIcon(transaction.status)}
+                      <span className="text-sm text-textSecondary capitalize">
+                        {transaction.status.toLowerCase()}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <ProofStatusBadge variant={transaction.proofStatus} />
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-textSecondary">
+                    {formatDate(transaction.timestamp)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => setShowTransactionDetails(
+                          showTransactionDetails === transaction.id ? null : transaction.id
+                        )}
+                        className="text-accent hover:text-accent/80"
+                        title="View Details"
                       >
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    )}
-                  </div>
-                </td>
-              </tr>
+                        <Eye className="h-4 w-4" />
+                      </button>
+                      {transaction.txHash && (
+                        <a
+                          href={`https://basescan.org/tx/${transaction.txHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-textSecondary hover:text-textPrimary"
+                          title="View on Basescan"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+                {/* Transaction Details Row */}
+                {showTransactionDetails === transaction.id && transaction.txHash && (
+                  <tr key={`${transaction.id}-details`}>
+                    <td colSpan={7} className="px-6 py-4 bg-surface/30">
+                      <TransactionStatus 
+                        txHash={transaction.txHash}
+                        autoRefresh={transaction.status === 'PENDING'}
+                      />
+                    </td>
+                  </tr>
+                )}
+              </Fragment>
             ))}
           </tbody>
         </table>
