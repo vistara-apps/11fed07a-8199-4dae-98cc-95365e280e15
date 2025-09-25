@@ -37,6 +37,8 @@ export const STREAMING_FREQUENCIES = [
   { value: 'quarterly', label: 'Quarterly' },
 ] as const;
 
+export const USDC_BASE_CONTRACT = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' as const;
+
 export const THEME_CONFIG = {
   default: {
     name: 'Finance Pro',

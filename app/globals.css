@@ -9,9 +9,11 @@
   --color-accent: #ffd700;
   --color-primary: #1e40af;
   --color-surface: #1e293b;
+  --color-surface-rgb: 30, 41, 59;
   --color-text-primary: #f1f5f9;
   --color-text-secondary: #94a3b8;
   --color-border: #334155;
+  --color-border-rgb: 51, 65, 85;
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
@@ -90,7 +92,8 @@
 
 @layer components {
   .glass-card {
-    @apply bg-surface/80 backdrop-blur-sm border border-border/50;
+    @apply bg-surface border border-border backdrop-blur-sm;
+    background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
   }
 
   .finance-gradient {
@@ -106,15 +109,28 @@
   }
 
   .btn-secondary {
-    @apply bg-surface border border-border text-textPrimary px-6 py-3 rounded-lg font-medium hover:bg-surface/80 transition-all duration-200;
+    @apply bg-surface border border-border text-textPrimary px-6 py-3 rounded-lg font-medium transition-all duration-200;
+  }
+  
+  .btn-secondary:hover {
+    background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
   }
 
   .metric-card {
-    @apply glass-card p-6 hover:bg-surface/90 transition-all duration-200 finance-gradient;
+    @apply glass-card p-6 transition-all duration-200 finance-gradient;
+  }
+  
+  .metric-card:hover {
+    background-color: color-mix(in srgb, var(--color-surface) 90%, transparent);
   }
 
   .transaction-row {
-    @apply border-b border-border/30 hover:bg-surface/30 transition-all duration-200;
+    @apply border-b transition-all duration-200;
+    border-bottom-color: color-mix(in srgb, var(--color-border) 30%, transparent);
+  }
+  
+  .transaction-row:hover {
+    background-color: color-mix(in srgb, var(--color-surface) 30%, transparent);
   }
 }
 
